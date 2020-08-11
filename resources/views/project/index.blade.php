@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birdboard</title>
-</head>
-
-<body>
+@extends('layouts.app')
+@section('content')
     <ul>
         @forelse($projects as $project)
-        <li>
+        <li class="bg-red">
             <a href="{{route('project.show',$project)}}"> 
                 {{$project->title}}
             </a>
@@ -19,6 +11,4 @@
         <li>No project yet!</li>
         @endforelse
     </ul>
-</body>
-
-</html>
+@endsection

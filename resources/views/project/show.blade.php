@@ -7,6 +7,6 @@
 </head>
 <body>
    <h1>{{$project->title}}</h1> 
-   <p>{{$project->description}}</p>
+   <div>{{$project->description}}</div>
 </body>
 </html>

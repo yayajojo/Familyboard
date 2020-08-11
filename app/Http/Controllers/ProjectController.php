@@ -37,6 +37,6 @@ class ProjectController extends Controller
         //persisit
         Auth::user()->projects()->save(new Project($validatedData));
         //redirect
-        return redirect('/projects');
+        return redirect(route('project.index'));
     }
 }
