@@ -28,8 +28,7 @@ class ManageProjectsTest extends TestCase
         $user = $this->authenticateUser();
         $project = factory('App\Project')->create(['owner_id' => $user->id]);
         $this->get(route('project.show', ['project' => $project]))
-            ->assertSee($project->title)
-            ->assertSee($project->description);
+            ->assertSee($project->title);
     }
 
     /** @test */
@@ -73,10 +72,5 @@ class ManageProjectsTest extends TestCase
     }
 
     
-    protected function authenticateUser()
-    {
-        $user = factory('App\User')->create();
-        $this->actingAs($user);
-        return $user;
-    }
+    
 }

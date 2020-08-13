@@ -49878,8 +49878,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/jhao/Desktop/all_projects/birdboard/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/jhao/Desktop/all_projects/birdboard/resources/css/main.css */"./resources/css/main.css");
+__webpack_require__(/*! /Users/jhao/Desktop/all_projects/familyboard/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/jhao/Desktop/all_projects/familyboard/resources/css/main.css */"./resources/css/main.css");
 
 
 /***/ })

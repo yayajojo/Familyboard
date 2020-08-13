@@ -17,13 +17,16 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        if(Auth::user()->isNot($project->owner)){
+        if (Auth::user()->isNot($project->owner)) {
             abort(403);
         }
-        return view('project.show', ['project' => $project]);
+        return view('project.show', [
+            'project' => $project
+        ]);
     }
-    
-    public function create(){
+
+    public function create()
+    {
         return view('project.create');
     }
     public function store(Request $request)
