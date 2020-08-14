@@ -8,6 +8,7 @@ use Tests\TestCase;
 
 class ProjectTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -19,15 +20,16 @@ class ProjectTest extends TestCase
      $this->assertInstanceOf('App\User',$project->owner);
     }
     /** @test */
-    public function project_can_add_a_project()
+    public function project_can_add_a_task()
     {
         $project = factory('App\Project')->create();
-        $task = factory('App\Task')->create(['project_id'=>$project->id]);
-        $project->tasks()->save($task);
+        
+        $project->addTask(['body'=>'Test task']);
         $this->assertDatabaseHas('tasks',
         ['project_id'=>$project->id,
-         'body'=>$task->body
+         'body'=>'Test task'
         ]);
+        $this->assertCount(1,$project->tasks);
     }
     
 }

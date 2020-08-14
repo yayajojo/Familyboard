@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Auth::user()->projects;
+        $projects = Auth::user()->getProjects();
         return view('project.index', ['projects' => $projects]);
     }
 
@@ -38,8 +38,8 @@ class ProjectController extends Controller
         ]);
 
         //persisit
-        Auth::user()->projects()->save(new Project($validatedData));
+        $project = Auth::user()->projects()->save(new Project($validatedData));
         //redirect
-        return redirect(route('project.index'));
+        return redirect(route('project.show',compact('project')));
     }
 }

@@ -21,8 +21,8 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 </head>
 
-<body>
-    <section class="px-8 py-4">
+<body >
+    <section class="px-16 py-4">
         <header class="container justify-between flex">
             <h1 class="text-left text-lg font-bold">
                 {{ config('app.name', 'Laravel') }}
@@ -44,8 +44,8 @@
             </div>
         </header>
     </section>
-    <section >
-        <main class="px-4 py-4  h-screen bg-gray-300">
+    <section>
+        <main class="px-16 py-4  h-screen bg-gray-300">
             @yield('content')
         </main>
     </section>

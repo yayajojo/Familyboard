@@ -19,4 +19,8 @@ class Project extends Model
         return $this->hasMany('App\Task');
     }
     
+    
+    public function addTask(array $task){
+        $this->tasks()->create($task);
+    }
 }

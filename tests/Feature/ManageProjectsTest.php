@@ -64,12 +64,13 @@ class ManageProjectsTest extends TestCase
         $this->get(route('project.create'))->assertStatus(200);
         $attributes = factory('App\Project')->raw(['owner_id' => null]);
         $authenticatedAttributes = array_merge($attributes, ['owner_id' => $user->id]);
+        $project = factory('App\Project')->create($authenticatedAttributes);
         $this->post(route('project.store'), $attributes)
-        ->assertRedirect(route('project.index'));
+        ->assertStatus(302);
         $this->get(route('project.index'))->assertSee($attributes['title']);
         $this->assertDatabaseHas('projects', $authenticatedAttributes);
-    
     }
+    
 
     
     
