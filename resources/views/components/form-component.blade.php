@@ -5,11 +5,11 @@
         <div class="flex-column m-2">
             <label for="title" class="label">Title</label>
             <br>
-            <input class="w-full" type="text" name="title" id="title">
+            <input class="w-full" type="text" name="title" id="title" required>
         </div>
         <div class="flex-column m-2">
             <label for="description" class="label">Description</label>
-            <textarea class="pl-2 w-full text-left" placeholder="Add some description..." name="description" id="description" rows="5"> </textarea>
+            <textarea class="pl-2 w-full text-left" placeholder="Add some description..." name="description" id="description" rows="5" required> </textarea>
         </div>
         <div class="flex m-2 items-end">
             <button class="button-add mr-8 " type="submit">

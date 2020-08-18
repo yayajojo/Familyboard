@@ -34,11 +34,8 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         //validate
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-
+        $validatedData = $this->validateForm();
+ 
         //persisit
         $project = Auth::user()->projects()->save(new Project($validatedData));
         //redirect
@@ -48,9 +45,17 @@ class ProjectController extends Controller
     public function update(Project $project)
     {
         $this->authorize('update',$project);
-        $validatedNote= request()->validate(['note'=>'max:255']);
-        $project->update($validatedNote);
+        $validatedData = $this->validateForm();
+        $project->update($validatedData);
         return redirect(route('project.show',compact('project')));
+    }
 
+    protected function validateForm()
+    {
+      return   request()->validate([
+        'title' => 'sometimes|required',
+        'description' => 'sometimes|required',
+        'note'=>'max:1000'
+    ]);
     }
 }

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class ManageProjectsTest extends TestCase
 {
-    use WithFaker, RefreshDatabase;
+  use RefreshDatabase;
 
     /** @test */
     public function guests_cannot_manage_projects()
@@ -33,12 +33,25 @@ class ManageProjectsTest extends TestCase
             ->assertSee($project->title);
     }
     /** @test */
-    public function project_can_update_a_generate_note()
+    public function project_owner_can_update_a_generate_note()
     {
         $project = ProjectFactory::ownedBy($this->signIn())->create();
-        $this->patch(route('project.update', compact('project')), ['note' => 'Generate note changed!'])
+        $note = ['note' => 'Generate note changed!'];
+        $this->patch(route('project.update', compact('project')), $note)
             ->assertRedirect(route('project.show', compact('project')));
         $this->get(route('project.show', compact('project')))->assertSee('Generate note changed!');
+        $this->assertDatabaseHas('projects',$note);
+    }
+
+    /** @test */
+    public function project_owner_can_update_the_project()
+    {
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
+        $projectBody = ['title' => 'title changed','description'=>'description changed'];
+        $this->patch(route('project.update', compact('project')), $projectBody)
+            ->assertRedirect(route('project.show', compact('project')));
+        $this->get(route('project.show', compact('project')))->assertSee('title changed');
+        $this->assertDatabaseHas('projects',$projectBody);
     }
     /** @test */
     public function an_authenticated_user_cannot_view_projects_of_others()
