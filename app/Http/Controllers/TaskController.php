@@ -11,9 +11,7 @@ class TaskController extends Controller
 {
     public function store(Request $request, Project $project)
     {
-        if (Auth::user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('update',$project);
         $validatedData = $request->validate(
             ['body' => 'required']
         );

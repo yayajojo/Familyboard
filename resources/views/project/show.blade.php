@@ -6,9 +6,9 @@
             My Projects
         </a>
         / {{$project->title}}</p>
-    <form class="text-xl" action="{{route('project.create')}}" method="get">
+    <form class="text-xl" action="{{route('project.edit')}}" method="get">
         <button class="button-add" type="submit">
-            Add Project
+            Edit Project
         </button>
     </form>
 </header>
@@ -24,14 +24,21 @@
                     @csrf
                     <input value=""
                     autocomplete="off"
-                    class="w-full outline-none focus:shadow-outline" 
+                    class="pl-2 w-full outline-none focus:shadow-outline" 
                     name="body"  
                     placeholder="Begin adding tasks...">
                 </form>
             </div>
             
             <h2 class="text-xl my-3 text-gray-700 font-normal">General Notes</h2>
-            <div class="card">Note content</div>
+            <div >
+            <form class="card flex-column" action="{{route('project.update',compact('project'))}}" method="post">
+                @csrf
+                @method('PATCH')
+            <textarea class="pl-2 w-full text-left" placeholder="Add some notes..." name="note" id="note" rows="5"> {{$project->note}}</textarea>
+            <button class="button-add m-2" type="submit">save</button>
+            </form>
+            </div>
         </div>
         <div class="w-1/4">
             <x-card :project="$project" />

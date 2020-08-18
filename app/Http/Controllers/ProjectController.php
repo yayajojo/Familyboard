@@ -17,18 +17,20 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        if (Auth::user()->isNot($project->owner)) {
-            abort(403);
-        }
-        return view('project.show', [
-            'project' => $project
-        ]);
+        $this->authorize('view',$project);
+    
+            return view('project.show', [
+                'project' => $project
+            ]);
+       
+        
     }
 
     public function create()
     {
         return view('project.create');
     }
+
     public function store(Request $request)
     {
         //validate
@@ -41,5 +43,14 @@ class ProjectController extends Controller
         $project = Auth::user()->projects()->save(new Project($validatedData));
         //redirect
         return redirect(route('project.show',compact('project')));
+    }
+
+    public function update(Project $project)
+    {
+        $this->authorize('update',$project);
+        $validatedNote= request()->validate(['note'=>'max:255']);
+        $project->update($validatedNote);
+        return redirect(route('project.show',compact('project')));
+
     }
 }
