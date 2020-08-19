@@ -35,6 +35,7 @@ class ManageProjectsTest extends TestCase
     /** @test */
     public function project_owner_can_update_a_generate_note()
     {
+        $this->withoutExceptionHandling();
         $project = ProjectFactory::ownedBy($this->signIn())->create();
         $note = ['note' => 'Generate note changed!'];
         $this->patch(route('project.update', compact('project')), $note)
@@ -46,11 +47,13 @@ class ManageProjectsTest extends TestCase
     /** @test */
     public function project_owner_can_update_the_project()
     {
+        $this->withoutExceptionHandling();
         $project = ProjectFactory::ownedBy($this->signIn())->create();
         $projectBody = ['title' => 'title changed','description'=>'description changed'];
         $this->patch(route('project.update', compact('project')), $projectBody)
             ->assertRedirect(route('project.show', compact('project')));
-        $this->get(route('project.show', compact('project')))->assertSee('title changed');
+        $response = $this->get(route('project.show', compact('project')));
+        $response->assertSeeText('title changed');
         $this->assertDatabaseHas('projects',$projectBody);
     }
     /** @test */

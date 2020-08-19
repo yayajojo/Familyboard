@@ -1,7 +1,9 @@
 <?php
 
+use App\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +27,7 @@ Route::middleware(['auth'])->group(
         Route::get('/projects', 'ProjectController@index')->name('project.index');
         Route::get('/projects/create','ProjectController@create')->name('project.create');
         Route::get('/projects/{project}','ProjectController@show')->name('project.show');
+        Route::get('/projects/{project}/edit','ProjectController@edit')->name('project.edit');
         Route::get('/home', 'HomeController@index')->name('home');
     }
 );

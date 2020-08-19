@@ -6,7 +6,7 @@
             My Projects
         </a>
         / {{$project->title}}</p>
-    <form class="text-xl" action="{{route('project.edit')}}" method="get">
+    <form class="text-xl" action="{{route('project.edit',compact('project'))}}" method="get">
         <button class="button-add" type="submit">
             Edit Project
         </button>
