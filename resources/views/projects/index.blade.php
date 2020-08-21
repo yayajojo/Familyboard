@@ -10,15 +10,15 @@
 </header>
 <div class="flex flex-wrap">
     @forelse($projects as $project)
-    <div class="lg:w-1/3 px-2 py-2 ">
+    <div class="lg:w-1/3 px-2 py-2">
         <x-card :project="$project" />
     </div>
     @empty
-    <div class="lg:w-1/3 card m-4" style="height:200px">
+    <div class="lg:w-1/3 card m-4">
         <h3 class="font-normal text-xl py-4">
-            
-                No project yet!
-          
+
+            No project yet!
+
         </h3>
     </div>
     @endforelse

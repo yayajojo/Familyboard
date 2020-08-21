@@ -100,4 +100,13 @@ class ManageProjectsTest extends TestCase
         $this->get(route('project.index'))->assertSee($attributes['title']);
         $this->assertDatabaseHas('projects', $authenticatedAttributes);
     }
+
+    /** @test */
+    public function project_owner_can_delete_a_project()
+    {
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
+        $this->delete(route('project.destory',compact('project')));
+        $this->assertDatabaseMissing('projects',['id'=>$project->id]);
+    }
+    
 }

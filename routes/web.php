@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(
     function(){
         Route::post('/projects', 'ProjectController@store')->name('project.store');
         Route::patch('projects/{project}','ProjectController@update')->name('project.update');
+        Route::delete('projects/{project}','ProjectController@destory')->name('project.destory');
         Route::get('/projects', 'ProjectController@index')->name('project.index');
         Route::get('/projects/create','ProjectController@create')->name('project.create');
         Route::get('/projects/{project}','ProjectController@show')->name('project.show');
