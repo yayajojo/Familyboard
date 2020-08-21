@@ -4,21 +4,23 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class ActivityComponent extends Component
+class TaskActivity extends Component
 {
     public $activity;
     public $action;
-    public $mission;
+    
+    
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($activity,$action,$mission)
+    public function __construct($activity,$action)
     {
         $this->activity = $activity;
         $this->action = $action;
-        $this->mission = $mission;
+        
+        
     }
 
     /**
@@ -28,6 +30,6 @@ class ActivityComponent extends Component
      */
     public function render()
     {
-        return view('components.activity-component');
+        return view('components.task-activity');
     }
 }

@@ -27,11 +27,13 @@ class Project extends Model
 
     public function activities()
     {
-        return $this->hasMany('App\Activity')->latest()->limit(8);
+        return $this->morphMany('App\Activity','recordable');
     }
 
     public function recordActivity(string $description)
     {
-        $this->activities()->create(['description' => $description]);
+        $this->activities()->create(
+            ['description' => $description]
+        );
     }
 }

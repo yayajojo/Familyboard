@@ -8,8 +8,8 @@ class Activity extends Model
 {
     protected $fillable=['description'];
 
-    public function project()
+    public function recordable()
     {
-        return $this->belongsTo('App\Project');
+        return $this->morphTo();
     }
 }

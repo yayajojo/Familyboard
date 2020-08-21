@@ -1,0 +1,1 @@
+<li>@ you have {{$action}} {{$action =='created'?'a':'the'}} project '{{$activity->recordable->title}}':{{$activity->created_at->diffForHumans()}}</li>

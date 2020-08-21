@@ -14,7 +14,14 @@ class Task extends Model
     }
     public function path()
     {
-        return '/projects/'.$this->project->id.'/tasks/'.$this->id;
+        return '/projects/' . $this->project->id . '/tasks/' . $this->id;
     }
-    
+    public function activities()
+    {
+        return $this->morphMany('App\Activity', 'recordable');
+    }
+    public function recordActivity(string $description)
+    {
+        $this->activities()->create(['description' => $description]);
+    }
 }
