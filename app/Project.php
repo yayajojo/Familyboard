@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $fillable = ['note', 'title', 'description', 'owner_id'];
-
+    
 
     public function owner()
     {
@@ -27,13 +27,16 @@ class Project extends Model
 
     public function activities()
     {
-        return $this->morphMany('App\Activity','recordable');
+        return $this->morphMany('App\Activity', 'recordable');
     }
 
-    public function recordActivity(string $description)
+    public function recordActivity(string $description, $changes = null)
     {
         $this->activities()->create(
-            ['description' => $description]
+            [
+                'description' => $description,
+                'changes' => $changes
+            ]
         );
     }
 }

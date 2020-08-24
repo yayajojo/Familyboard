@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Task;
+use Illuminate\Support\Arr;
 
 class TaskObserver
 {
@@ -25,14 +26,15 @@ class TaskObserver
      */
     public function updated(Task $task)
     {
+        $changes = $this->getChanges($task);
         if ($task->completed && !$task->getOriginal('completed')) 
         {
-            $task->recordActivity('completed_task');
+            $task->recordActivity('completed_task',$changes);
         } else if(!$task->completed && $task->getOriginal('completed'))
         {
-            $task->recordActivity('uncompleted_task');
+            $task->recordActivity('uncompleted_task',$changes);
         }else{
-            $task->recordActivity('updated_task');
+            $task->recordActivity('updated_task',$changes);
         }
     }
 
@@ -67,5 +69,15 @@ class TaskObserver
     public function forceDeleted(Task $task)
     {
         //
+    }
+    protected function getChanges(Task $task){
+        $after = Arr::except($task->getChanges(),'updated_at');
+        $original= $task->getOriginal();
+
+        $before = array_intersect_key($original,$after);
+        $changes = 
+        ['before'=>$before,
+        'after'=>$after];
+        return $changes;
     }
 }

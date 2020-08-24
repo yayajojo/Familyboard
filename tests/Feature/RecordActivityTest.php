@@ -24,8 +24,7 @@ class RecordActivityTest extends TestCase
      */
     public function updating_a_project()
     {
-        $project = ProjectFactory::create();
-        $originalTitle = $project->title;
+        $project = factory('App\Project')->create(['title'=>'title']);
         $project->update(['title' => 'title changed']);
         $this->assertCount(2, $project->activities);
         $this->assertDatabaseHas('activities', [
@@ -33,6 +32,9 @@ class RecordActivityTest extends TestCase
             'recordable_id' => $project->id,
             'description' => 'updated',
         ]);
+        
+        $this->assertEquals(['after'=>['title'=>'title changed'],'before'=>['title'=>'title']],
+        json_decode($project->activities[1]->changes,true));
     }
 
     /** @test */
@@ -47,12 +49,15 @@ class RecordActivityTest extends TestCase
     /** @test */
     public function completing_a_task()
     {
+        $this->withoutExceptionHandling();
         $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
         $task = $project->tasks[0];
-        $this->patch($project->tasks[0]->path(), ['body' => 'thx', 'completed' => 'on']);
+        $this->patch($task->path(), ['body'=>$task->body,'completed' => 'on']);
         $this->assertDatabaseHas('activities', ['description' => 'completed_task']);
         $this->assertCount(2, $task->activities);
         $this->assertEquals('completed_task', $task->activities[1]->description);
+        $this->assertEquals(['after'=>['completed'=>1],'before'=>['completed'=>0]],
+        $task->activities[1]->changes);
     }
     /** @test */
     public function uncompleting_a_task()

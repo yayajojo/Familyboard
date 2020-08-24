@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Activity;
 use App\Project;
+use Illuminate\Support\Arr;
 
 class ProjectObserver
 {
@@ -15,6 +16,7 @@ class ProjectObserver
      */
     public function created(Project $project)
     {
+       
         $project->recordActivity('created');;
     }
 
@@ -26,7 +28,8 @@ class ProjectObserver
      */
     public function updated(Project $project)
     {
-        $project->recordActivity('updated');
+        $changes =$this->getChanges($project);
+        $project->recordActivity('updated',$changes);
     }
 
     /**
@@ -60,5 +63,15 @@ class ProjectObserver
     public function forceDeleted(Project $project)
     {
         //
+    }
+
+    protected function getChanges(Project $project){
+        $after = Arr::except($project->getChanges(),'updated_at');
+        $original= $project->getOriginal();
+        $before = array_intersect_key($original,$after);
+        $changes = 
+        ['before'=>$before,
+        'after'=>$after];
+        return $changes;
     }
 }

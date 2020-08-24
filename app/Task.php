@@ -8,6 +8,8 @@ class Task extends Model
 {
     protected $fillable = ['body', 'completed'];
     protected $touches = ['project'];
+    protected $casts = ['completed' => 'boolean'];
+
     public function project()
     {
         return $this->belongsTo('App\Project');
@@ -20,8 +22,8 @@ class Task extends Model
     {
         return $this->morphMany('App\Activity', 'recordable');
     }
-    public function recordActivity(string $description)
+    public function recordActivity(string $description, $changes = null)
     {
-        $this->activities()->create(['description' => $description]);
+        $this->activities()->create(['description' => $description, 'changes' => $changes]);
     }
 }

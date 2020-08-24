@@ -17,6 +17,7 @@ class CreateActivitiesTable extends Migration
             $table->id();
             $table->nullableMorphs('recordable');
             $table->text('description');
+            $table->json('changes')->nullable();
             $table->timestamps();
         });
     }
