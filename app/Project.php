@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use Recordability;
     protected $fillable = ['note', 'title', 'description', 'owner_id'];
-    
 
     public function owner()
     {
@@ -29,14 +29,12 @@ class Project extends Model
     {
         return $this->morphMany('App\Activity', 'recordable');
     }
-
-    public function recordActivity(string $description, $changes = null)
+    public function members()
     {
-        $this->activities()->create(
-            [
-                'description' => $description,
-                'changes' => $changes
-            ]
-        );
+        return $this->belongsToMany('App\User','member_project','project_id','member_id');
+    }
+    public function invite(User $member)
+    {
+        $this->members()->save($member);
     }
 }

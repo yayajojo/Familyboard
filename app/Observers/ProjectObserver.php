@@ -2,12 +2,13 @@
 
 namespace App\Observers;
 
-use App\Activity;
+use App\ActivityChange;
 use App\Project;
-use Illuminate\Support\Arr;
+
 
 class ProjectObserver
 {
+    use ActivityChange;
     /**
      * Handle the project "created" event.
      *
@@ -43,35 +44,5 @@ class ProjectObserver
         
     }
 
-    /**
-     * Handle the project "restored" event.
-     *
-     * @param  \App\Project  $project
-     * @return void
-     */
-    public function restored(Project $project)
-    {
-        //
-    }
-
-    /**
-     * Handle the project "force deleted" event.
-     *
-     * @param  \App\Project  $project
-     * @return void
-     */
-    public function forceDeleted(Project $project)
-    {
-        //
-    }
-
-    protected function getChanges(Project $project){
-        $after = Arr::except($project->getChanges(),'updated_at');
-        $original= $project->getOriginal();
-        $before = array_intersect_key($original,$after);
-        $changes = 
-        ['before'=>$before,
-        'after'=>$after];
-        return $changes;
-    }
+    
 }

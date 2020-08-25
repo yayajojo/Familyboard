@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    use Recordability;
+    
     protected $fillable = ['body', 'completed'];
     protected $touches = ['project'];
     protected $casts = ['completed' => 'boolean'];
@@ -22,8 +24,5 @@ class Task extends Model
     {
         return $this->morphMany('App\Activity', 'recordable');
     }
-    public function recordActivity(string $description, $changes = null)
-    {
-        $this->activities()->create(['description' => $description, 'changes' => $changes]);
-    }
+    
 }

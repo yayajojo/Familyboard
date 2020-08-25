@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Model;
 
+use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -31,5 +32,13 @@ class ProjectTest extends TestCase
         ]);
         $this->assertCount(1,$project->tasks);
     }
+    /** @test */
+    public function a_project_can_invite_a_member()
+    {
+        $project = ProjectFactory::create();
+        $member =factory('App\User')->create();
+        $project->invite($member);
+        $this->assertTrue($project->members->contains($member));
+    } 
     
 }

@@ -39,11 +39,21 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany('App\Project','owner_id');
+        return $this->hasMany('App\Project', 'owner_id');
     }
     public function getProjects()
     {
-     return $this->projects()->orderBy('updated_at','desc')->get();
+        Project::where('owner_id',$this->id)->orWherehas()->orderBy('updated_at', 'desc')->get();
+        return $this->projects()->orderBy('updated_at', 'desc')->get();
     }
 
+    public function activities()
+    {
+        return $this->hasMany('App\Activity');
+    }
+
+    public function invitedProject()
+    {
+        return $this->belongsToMany('App\Project','member_project','member_id','project_id');
+    }
 }

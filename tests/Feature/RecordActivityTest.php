@@ -34,7 +34,7 @@ class RecordActivityTest extends TestCase
         ]);
         
         $this->assertEquals(['after'=>['title'=>'title changed'],'before'=>['title'=>'title']],
-        json_decode($project->activities[1]->changes,true));
+        $project->activities[1]->changes);
     }
 
     /** @test */
@@ -56,7 +56,7 @@ class RecordActivityTest extends TestCase
         $this->assertDatabaseHas('activities', ['description' => 'completed_task']);
         $this->assertCount(2, $task->activities);
         $this->assertEquals('completed_task', $task->activities[1]->description);
-        $this->assertEquals(['after'=>['completed'=>1],'before'=>['completed'=>0]],
+        $this->assertEquals(['after'=>['completed'=>true],'before'=>['completed'=>false]],
         $task->activities[1]->changes);
     }
     /** @test */
@@ -64,12 +64,14 @@ class RecordActivityTest extends TestCase
     {
         $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
         $task = $project->tasks[0];
-        $this->patch($task->path(), ['body' => 'body', 'completed' => 'on']);
+        $this->patch($task->path(), ['body' => $task->body,'completed' => 'on']);
         $this->assertDatabaseHas('activities', ['description' => 'completed_task']);
-        $this->patch($task->path(), ['body' => 'body']);
+        $this->patch($task->path(), ['body' => $task->body]);
         $this->assertCount(1, $project->activities);
         $this->assertCount(3, $task->activities);
         $this->assertEquals('uncompleted_task', $task->activities[2]->description);
+        $this->assertEquals(['after'=>['completed'=>false],'before'=>['completed'=>true]],
+        $task->activities[2]->changes);
     }
     /** @test */
     public function updating_a_task()

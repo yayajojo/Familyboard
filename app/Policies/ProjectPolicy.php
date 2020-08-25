@@ -30,7 +30,7 @@ class ProjectPolicy
      */
     public function view(User $user, Project $project)
     {
-        return $user->is($project->owner);
+        return $project->members->contains($user)|| $user->is($project->owner);
     }
     /**
      * Determine whether the user can create models.
@@ -52,7 +52,8 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project)
     {
-        return $user->is($project->owner);
+        
+        return $project->members->contains($user)|| $user->is($project->owner);
     }
 
     /**
