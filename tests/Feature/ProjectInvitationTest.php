@@ -34,7 +34,7 @@ class ProjectInvitationTest extends TestCase
         $project = ProjectFactory::ownedBy($this->signIn())->create();
         $notMemberEmail = 'notmember@email';
         $res = $this->post(route('invitation.store', compact('project')), ['email' => $notMemberEmail])
-            ->assertSessionHasErrors(['email'=>'The invited member should have a valid familyboard account']);
+            ->assertSessionHasErrorsIn('invitation',['email'=>'The invited member should have a valid familyboard account']);
     }
 
     /** @test */

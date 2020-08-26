@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate as Gate;
 
 class InvitationRequest extends FormRequest
 {
-    //protected $errorBag = 'invitation';
+    protected $errorBag = 'invitation';
     /**
      * Determine if the user is authorized to make this request.
      *

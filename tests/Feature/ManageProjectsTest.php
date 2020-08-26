@@ -25,7 +25,7 @@ class ManageProjectsTest extends TestCase
 
 
     /** @test */
-    public function an_authenticated_user_can_view_their_project()
+    public function a_user_can_view_their_project()
     {
 
         $project = ProjectFactory::ownedBy($this->signIn())->create();
@@ -34,17 +34,17 @@ class ManageProjectsTest extends TestCase
     }
 
     /** @test */
-    public function user_can_view_all_accessible_project()
+    public function a_user_can_view_all_accessible_project()
     {
         $may = factory('App\User')->create();
         $project = ProjectFactory::ownedBy($may)->create();
         $jhon = factory('App\User')->create();
         $project->invite($jhon);
         $this->signIn($jhon);
-        $this->get(route('project.index'))->assertSee($project->title);
-
+        $this->get(route('project.index'))
+            ->assertSee($project->title);
     }
-    
+
     /** @test */
     public function project_owner_can_update_the_project_note()
     {
@@ -70,17 +70,19 @@ class ManageProjectsTest extends TestCase
         $this->assertDatabaseHas('projects', $projectBody);
     }
     /** @test */
-    public function an_authenticated_user_can_create_a_project()
+    public function a_user_can_create_a_project()
     {
 
         $user = $this->signIn();
-        $this->get(route('project.create'))->assertStatus(200);
-        $attributes = factory('App\Project')->raw(['owner_id' => null, 'note' => null]);
-        $authenticatedAttributes = array_merge($attributes, ['owner_id' => $user->id]);
+        $this->get(route('project.create'))
+            ->assertStatus(200);
+        $attributes = factory('App\Project')->raw(['owner_id' => null]);
         $this->post(route('project.store'), $attributes)
-            ->assertStatus(302);
-        $this->get(route('project.index'))->assertSee($attributes['title']);
-        $this->assertDatabaseHas('projects', $authenticatedAttributes);
+            ->assertStatus(302)
+            ->assertRedirect(route('project.show', ['project' => $user->projects[0]]));
+        $this->get(route('project.index'))
+            ->assertSee($attributes['title']);
+        $this->assertDatabaseHas('projects', ['owner_id' => $user->id]);
     }
 
     /** @test */
@@ -91,13 +93,24 @@ class ManageProjectsTest extends TestCase
         $this->assertDatabaseMissing('projects', ['id' => $project->id]);
     }
     /** @test */
-    public function only_project_owner_can_delete_the_project()
+    public function non_project_owner_can_not_delete_the_project()
     {
         $this->signIn();
         $project = ProjectFactory::create();
         $this->delete(route('project.destory', compact('project')))->assertForbidden();
         $this->assertDatabaseHas('projects', ['id' => $project->id]);
     }
+
+    /** @test */
+    public function invited_member_can_not_delete_a_project()
+    {
+        $owner = factory("App\User")->create();
+        $project = ProjectFactory::create($owner);
+        $member = $this->signIn();
+        $project->invite($member);
+        $this->delete(route('project.destory', compact('project')))->assertForbidden();
+    }
+
     /** @test */
     public function an_authenticated_user_cannot_view_projects_of_others()
     {
@@ -128,6 +141,4 @@ class ManageProjectsTest extends TestCase
         $attributes = factory('App\Project')->raw(['description' => null]);
         $this->post(route('project.store'), $attributes)->assertSessionHasErrors(['description']);
     }
-    
-    
 }

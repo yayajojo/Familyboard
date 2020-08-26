@@ -46,7 +46,11 @@
         <div class="w-1/4 m-4">
             <x-card :project="$project" />
             @include('activities.index',['project'=>$project])
+            @can('invite',$project)
+            <x-invitation :project="$project" />
+            @endcan
         </div>
+
     </div>
 
 </main>
