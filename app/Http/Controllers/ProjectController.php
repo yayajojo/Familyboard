@@ -13,6 +13,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
+        
         $projects = Auth::user()->getProjects();
         return view('projects.index', ['projects' => $projects]);
     }

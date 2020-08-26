@@ -38,9 +38,9 @@ class ProjectPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function invite(User $user,Project $project)
     {
-        //
+        return $user->is($project->owner);
     }
 
     /**
@@ -80,15 +80,5 @@ class ProjectPolicy
         //
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Project  $project
-     * @return mixed
-     */
-    public function forceDelete(User $user, Project $project)
-    {
-        //
-    }
+    
 }

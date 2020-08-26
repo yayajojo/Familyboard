@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -43,8 +44,11 @@ class User extends Authenticatable
     }
     public function getProjects()
     {
-        Project::where('owner_id',$this->id)->orWherehas()->orderBy('updated_at', 'desc')->get();
-        return $this->projects()->orderBy('updated_at', 'desc')->get();
+       return  Project::where('owner_id', $this->id)
+            ->orWherehas('members', function (Builder $query) {
+                $query->where('member_id', $this->id);
+            })->orderBy('updated_at', 'desc')->get();
+        
     }
 
     public function activities()
@@ -54,6 +58,6 @@ class User extends Authenticatable
 
     public function invitedProject()
     {
-        return $this->belongsToMany('App\Project','member_project','member_id','project_id');
+        return $this->belongsToMany('App\Project', 'member_project', 'member_id', 'project_id');
     }
 }

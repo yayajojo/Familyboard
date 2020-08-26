@@ -2,7 +2,9 @@
 
 use App\Project;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -39,5 +41,14 @@ Route::middleware(['auth'])->group(
         Route::patch('/projects/{project}/tasks/{task}','TaskController@update')->name('task.update');
     }
 );
+
+
+Route::middleware(['auth'])->group(
+    function(){
+        Route::post('/projects/{project}/invitations','ProjectInvitationController@store')->name('invitation.store');
+       
+    }
+);
+
 
 

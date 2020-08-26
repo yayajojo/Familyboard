@@ -6,11 +6,14 @@
             My Projects
         </a>
         / {{$project->title}}</p>
+    <div class="flex items-center">
+    <x-gravartar :project="$project"/>
     <form class="text-xl" action="{{route('project.edit',compact('project'))}}" method="get">
         <button class="button-add" type="submit">
             Edit Project
         </button>
     </form>
+    </div>
 </header>
 <main class="px-4 py-4">
     <div class="lg:flex -mx-3">

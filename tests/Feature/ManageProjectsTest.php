@@ -128,14 +128,6 @@ class ManageProjectsTest extends TestCase
         $attributes = factory('App\Project')->raw(['description' => null]);
         $this->post(route('project.store'), $attributes)->assertSessionHasErrors(['description']);
     }
-    /** @test */
-    public function a_project_can_invite_members()
-    {
-        $project = ProjectFactory::create();
-        $member = factory('App\User')->create();
-        $project->invite($member);
-        $this->signIn($member);
-        $this->patch(route('project.update',compact('project')),['title'=>'title changed'])->assertStatus(302);
-        $this->assertDatabaseHas('projects',['title'=>'title changed']);
-    }
+    
+    
 }
