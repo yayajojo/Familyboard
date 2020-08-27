@@ -49,6 +49,7 @@
             @can('invite',$project)
             <x-invitation :project="$project" />
             @endcan
+            
         </div>
 
     </div>

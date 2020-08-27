@@ -25,3 +25,23 @@
 </div>
 
 @endsection
+
+<!-- @section('footer') -->
+<!-- <!-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  
+  <script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('bd77b92286237e3d3bfe', {
+      cluster: 'ap3'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      location.reload();
+    });
+
+  </script> -->
+
+@endsection -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UpdateProject;
 use App\Http\Requests\InvitationRequest;
 use App\Project;
 use App\User;
