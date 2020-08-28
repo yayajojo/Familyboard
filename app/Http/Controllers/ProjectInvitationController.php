@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProjectInvitation;
 use App\Events\UpdateProject;
 use App\Http\Requests\InvitationRequest;
 use App\Project;
@@ -16,6 +17,7 @@ class ProjectInvitationController extends Controller
         $validated = $request->validated();
         $invitedMember = User::whereEmail($validated['email'])->first();
         $project->invite($invitedMember);
+        broadcast(new ProjectInvitation($invitedMember));
         return redirect(route('project.show', compact('project')));
     }
 }

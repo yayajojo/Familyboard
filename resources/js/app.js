@@ -29,4 +29,14 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    async created(){
+       const response = await axios.get('/members/id');
+       const memberId = response.data;
+       console.log(memberId);
+        Echo.private(`invitedMember.${memberId}`)
+        .listen('ProjectInvitation', (e) => {
+            alert(`${e.member['name']} is invited to join the project`);
+            location.reload();  
+        })
+    }
 });

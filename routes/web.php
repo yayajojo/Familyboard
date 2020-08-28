@@ -46,7 +46,10 @@ Route::middleware(['auth'])->group(
 Route::middleware(['auth'])->group(
     function(){
         Route::post('/projects/{project}/invitations','ProjectInvitationController@store')->name('invitation.store');
-       
+        Route::get('/members/id',function(){
+            return Auth::id();
+        }
+    );
     }
 );
 

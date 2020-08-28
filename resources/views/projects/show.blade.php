@@ -1,4 +1,7 @@
 @extends('layouts.nav')
+@section('head')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
 <header class="flex items-end px-4 py-4 justify-between">
     <p class="text-sm text-gray-700">

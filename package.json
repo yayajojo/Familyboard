@@ -14,7 +14,7 @@
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0.2",
         "jquery": "^3.2",
-        "laravel-mix": "^5.0.1",
+        "laravel-mix": "^5.0.5",
         "less": "^3.12.2",
         "less-loader": "^6.2.0",
         "lodash": "^4.17.19",
@@ -26,6 +26,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "tailwindcss": "^1.6.2"
+        "laravel-echo": "^1.8.1",
+        "pusher-js": "^7.0.0",
+        "tailwindcss": "^1.6.2",
+        "vue-js-modal": "^2.0.0-rc.6"
     }
 }
