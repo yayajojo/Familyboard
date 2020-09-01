@@ -33,13 +33,23 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
     async created(){
-       const response = await axios.get('/members/id');
+       const response = await axios.get('/member/id');
        const memberId = response.data;
-       console.log(memberId);
         Echo.private(`invitedMember.${memberId}`)
         .listen('ProjectInvitation', (e) => {
             alert(`${e.member['name']} is invited to join the project`);
+            console.log(e);
             location.reload();  
-        })
-    }
+        });
+    },
+    // async updated(){
+    //     const url = await window.location.pathname;
+    //     const projectId = url.split("/",3)[2];
+    //     Echo.private(`updatedProject.${projectId}`)
+    //     .listen('TasksChnaged', (e) => {
+    //         console.log(e);
+    //         location.reload();  
+    //     })
+    // }
 });
+

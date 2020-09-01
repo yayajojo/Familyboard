@@ -56626,25 +56626,34 @@ var app = new Vue({
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios.get('/members/id');
+              return axios.get('/member/id');
 
             case 2:
               response = _context.sent;
               memberId = response.data;
-              console.log(memberId);
               Echo["private"]("invitedMember.".concat(memberId)).listen('ProjectInvitation', function (e) {
                 alert("".concat(e.member['name'], " is invited to join the project"));
+                console.log(e);
                 location.reload();
               });
 
-            case 6:
+            case 5:
             case "end":
               return _context.stop();
           }
         }
       }, _callee);
     }))();
-  }
+  } // async updated(){
+  //     const url = await window.location.pathname;
+  //     const projectId = url.split("/",3)[2];
+  //     Echo.private(`updatedProject.${projectId}`)
+  //     .listen('TasksChnaged', (e) => {
+  //         console.log(e);
+  //         location.reload();  
+  //     })
+  // }
+
 });
 
 /***/ }),

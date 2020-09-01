@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\ActivityChange;
+use App\Events\TasksChanged;
 use App\Task;
 
 
@@ -18,6 +19,8 @@ class TaskObserver
     public function created(Task $task)
     {
         $task->recordActivity('created_task');
+        broadcast(new TasksChanged($task->project));
+        
     }
 
     /**
@@ -36,6 +39,8 @@ class TaskObserver
         } else {
             $task->recordActivity('updated_task', $changes);
         }
+        broadcast(new TasksChanged($task->project));
+
     }
 
     /**
