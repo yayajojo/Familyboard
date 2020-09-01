@@ -6,8 +6,7 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
-import VModal from 'vue-js-modal';
-Vue.use(VModal);
+
 
 
 
@@ -32,24 +31,28 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
-    async created(){
-       const response = await axios.get('/member/id');
-       const memberId = response.data;
+    async created() {
+        const response = await axios.get('/member/id');
+        const memberId = response.data;
         Echo.private(`invitedMember.${memberId}`)
-        .listen('ProjectInvitation', (e) => {
-            alert(`${e.member['name']} is invited to join the project`);
-            console.log(e);
-            location.reload();  
-        });
+            .listen('ProjectInvitation', (e) => {
+                alert(`${e.member['name']} is invited to join the project`);
+                console.log(e);
+                window.location.href = 'http://familyboard.test/projects';
+            });
     },
-    // async updated(){
-    //     const url = await window.location.pathname;
-    //     const projectId = url.split("/",3)[2];
-    //     Echo.private(`updatedProject.${projectId}`)
-    //     .listen('TasksChnaged', (e) => {
-    //         console.log(e);
-    //         location.reload();  
-    //     })
-    // }
+
 });
 
+const projectshow = new Vue({
+    el: '#projectshow',
+    async created() {
+        const url = await window.location.pathname;
+        const projectId = await url.split("/", 3)[2];
+        Echo.private(`updatedProject.${projectId}`)
+            .listen('TasksChanged', (e) => {
+                console.log(e);
+                window.location.reload();
+            })
+    }
+})

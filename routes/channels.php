@@ -25,7 +25,6 @@ Broadcast::channel('invitedMember.{member_Id}', function ($user,$member_Id) {
 
 Broadcast::channel('updatedProject.{project_Id}', function ($user,$project_Id) {
     $project = Project::find($project_Id);
-    return $project->members->contains($user)||
-    $project->owner->is($user);
+    return $project->members->contains($user)||$project->owner->is($user);
     
 });
