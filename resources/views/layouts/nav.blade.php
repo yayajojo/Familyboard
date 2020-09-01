@@ -23,7 +23,7 @@
 </head>
 
 
-    <body class="h-full  bg-gray-300">
+<body class="h-full  bg-gray-300">
     <div id="app">
         <section class="px-16 py-4 bg-gray-500">
             <header class="container justify-between flex">
@@ -52,6 +52,7 @@
                 @yield('content')
             </main>
         </section>
-       
-</div>
+
+    </div>
+    @yield('footer')
 </body>
