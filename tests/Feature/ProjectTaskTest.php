@@ -32,7 +32,7 @@ class ProjectTaskTest extends TestCase
    * @test
    * 
    */
-  public function task_can_be_updated()
+  public function a_task_can_be_updated()
   {
     $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
     $task = $project->tasks[0];
@@ -60,6 +60,15 @@ class ProjectTaskTest extends TestCase
       ->assertStatus(403);
     $this->assertDatabaseMissing('tasks', ['body' => 'Test task']);
   }
+
+  /** @test */
+  public function a_task_require_a_due_date()
+  {
+    $project = ProjectFactory::ownedBy($this->signIn())->create();
+    $this->post(route('task.store', ['project' => $project]), ['body' => "no due date",'due'=>null])
+      ->assertSessionHasErrors(['due']);
+  }
+  
   
 
   /** @test */

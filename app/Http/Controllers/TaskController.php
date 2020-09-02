@@ -13,7 +13,9 @@ class TaskController extends Controller
     {
         $this->authorize('update', $project);
         $validatedData = $request->validate(
-            ['body' => 'required']
+            ['body' => 'required',
+            'due'=>'required|date'
+            ]
         );
         $project->addTask($validatedData);
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -20,7 +21,7 @@ class Project extends Model
     }
 
 
-    public function addTask(array $task)
+    public function addTask(array $task,$due)
     {
         $this->tasks()->create($task);
     }
