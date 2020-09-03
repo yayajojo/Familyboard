@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use Recordability;
-    
-    protected $fillable = ['body', 'completed'];
+
+    protected $fillable = ['body', 'completed','start','due'];
     protected $touches = ['project'];
-    protected $casts = ['completed' => 'boolean'];
+    protected $casts = [
+        'completed' => 'boolean',
+        // 'start' => 'datetime:yy-m-d\TH:m',
+        // 'due' => 'datetime:yy-m-d\TH:m'
+    ];
 
     public function project()
     {
@@ -24,5 +28,4 @@ class Task extends Model
     {
         return $this->morphMany('App\Activity', 'recordable');
     }
-    
 }

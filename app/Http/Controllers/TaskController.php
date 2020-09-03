@@ -9,14 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function store(Request $request, Project $project)
+    public function store(Project $project)
     {
         $this->authorize('update', $project);
-        $validatedData = $request->validate(
-            ['body' => 'required',
-            'due'=>'required|date'
-            ]
-        );
+        $validatedData = $this->validateRequest();
         $project->addTask($validatedData);
 
         return redirect(route('project.show', $project));
@@ -25,11 +21,13 @@ class TaskController extends Controller
     public function update(Project $project, Task $task)
     {
         $this->userIsOwnerOrMemberOfProject($task);
-        request()->validate(['body' => 'required']);
-        $updatedAttribute = [
-            'body' => request('body'),
-            'completed' => request()->has('completed')
-        ];
+        $validatedData = $this->validateRequest();
+        $updatedAttribute = array_merge(
+            $validatedData,
+            [
+                'completed' => request()->has('completed')
+            ]
+        );
         $task->update($updatedAttribute);
         return redirect(route('project.show', compact('project')));
     }
@@ -42,5 +40,16 @@ class TaskController extends Controller
         ) {
             abort(403);
         }
+    }
+
+    protected function validateRequest()
+    {
+        return request()->validate(
+            [
+                'body' => 'required',
+                'due' => 'required|date',
+                'start' => 'required|date'
+            ]
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Facades\Tests\SetUp\ProjectFactory;
 use Tests\TestCase;
@@ -20,12 +21,13 @@ class ProjectTaskTest extends TestCase
   public function project_can_has_tasks()
   {
     $project = ProjectFactory::ownedBy($this->signIn())->create();
-    $task = ['body' => 'Test Task'];
+    $task = factory('App\Task')->raw(['project_id' =>null,'body'=>'Task test']);
+    
     $this->post(
       route('task.store', ['project' => $project]),
       $task
     );
-    $this->get(route('project.show', ['project' => $project]))->assertSee('Test Task');
+    $this->get(route('project.show', ['project' => $project]))->assertSee('Task test');
   }
 
   /** 
@@ -37,7 +39,9 @@ class ProjectTaskTest extends TestCase
     $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
     $task = $project->tasks[0];
     $this->assertDatabaseHas('tasks', ['id' => $task->id]);
-    $this->patch($task->path(), ['completed' => 'on', 'body' => 'Task updated'])->assertRedirect(route('project.show', ['project' => $project]));
+    $updatedTask = array_merge($task->toArray(),['body' => 'Task updated']);
+    $this->patch($task->path(), $updatedTask)
+    ->assertRedirect(route('project.show', ['project' => $project]));
     $this->assertDatabaseHas('tasks', ['body' => 'Task updated', 'completed' => true, 'id' => $task->id]);
   }
 
@@ -68,6 +72,15 @@ class ProjectTaskTest extends TestCase
     $this->post(route('task.store', ['project' => $project]), ['body' => "no due date",'due'=>null])
       ->assertSessionHasErrors(['due']);
   }
+
+  /** @test */
+  public function a_task_require_a_start_date()
+  {
+    $project = ProjectFactory::ownedBy($this->signIn())->create();
+    $this->post(route('task.store', ['project' => $project]), ['body' => "no due date",'due'=>Carbon::now(),'start'=>null])
+      ->assertSessionHasErrors(['start']); 
+  }
+  
   
   
 

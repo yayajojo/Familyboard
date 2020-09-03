@@ -26,12 +26,7 @@
                 @foreach($project->tasks as $task)
                 <x-task :task="$task" />
                 @endforeach
-                <div class="card mb-3">
-                    <form action="{{route('task.store',compact('project'))}}" method="post">
-                        @csrf
-                        <input value="" autocomplete="off" class="pl-2 w-full outline-none focus:shadow-outline" name="body" placeholder="Begin adding tasks...">
-                    </form>
-                </div>
+                <x-create-task  :project="$project" />
 
                 <h2 class="text-xl my-3 text-gray-700 font-normal">General Notes</h2>
                 <div>

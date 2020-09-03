@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class RecordActivityTest extends TestCase
@@ -52,7 +54,8 @@ class RecordActivityTest extends TestCase
         $this->withoutExceptionHandling();
         $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
         $task = $project->tasks[0];
-        $this->patch($task->path(), ['body'=>$task->body,'completed' => 'on']);
+        $completedTask = array_merge($task->toArray(),['completed' => 'on']);
+        $this->patch($task->path(), $completedTask);
         $this->assertDatabaseHas('activities', ['description' => 'completed_task']);
         $this->assertCount(2, $task->activities);
         $this->assertEquals('completed_task', $task->activities[1]->description);
@@ -64,9 +67,11 @@ class RecordActivityTest extends TestCase
     {
         $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
         $task = $project->tasks[0];
-        $this->patch($task->path(), ['body' => $task->body,'completed' => 'on']);
+        $completedTask = array_merge($task->toArray(),['completed' => 'on']);
+        $this->patch($task->path(), $completedTask);
         $this->assertDatabaseHas('activities', ['description' => 'completed_task']);
-        $this->patch($task->path(), ['body' => $task->body]);
+        $uncompletedTask = Arr::except($completedTask,'completed');
+        $this->patch($task->path(), $uncompletedTask);
         $this->assertCount(1, $project->activities);
         $this->assertCount(3, $task->activities);
         $this->assertEquals('uncompleted_task', $task->activities[2]->description);
@@ -77,7 +82,9 @@ class RecordActivityTest extends TestCase
     public function updating_a_task()
     {
         $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
-        $this->patch($project->tasks[0]->path(), ['body' => 'body changed!']);
+        $task = $project->tasks[0];
+        $updatedTask = Arr::except(array_merge($task->toArray(),['body' => 'body changed!']),'completed');
+        $this->patch($task->path(), $updatedTask);
         $this->assertDatabaseHas('activities', ['description' => 'updated_task']);
     }
     /** @test */

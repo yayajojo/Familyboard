@@ -21,8 +21,8 @@ class Project extends Model
     }
 
 
-    public function addTask(array $task,$due)
-    {
+    public function addTask(array $task)
+    { 
         $this->tasks()->create($task);
     }
 

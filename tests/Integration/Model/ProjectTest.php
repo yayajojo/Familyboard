@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Model;
 
+use Carbon\Carbon;
 use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -24,8 +25,8 @@ class ProjectTest extends TestCase
     public function project_can_add_a_task()
     {
         $project = factory('App\Project')->create();
-        
-        $project->addTask(['body'=>'Test task']);
+        $task = factory('App\Task')->raw(['body'=>'Test task','project_id'=>null]);
+        $project->addTask($task);
         $this->assertDatabaseHas('tasks',
         ['project_id'=>$project->id,
          'body'=>'Test task'

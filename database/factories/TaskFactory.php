@@ -12,5 +12,6 @@ $factory->define(Task::class, function (Faker $faker) {
         'body'=>$faker->sentence,
         'completed'=>false,
         'due'=>Carbon::now()->addDays(1),
+        'start'=>Carbon::now()
     ];
 });
