@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 class Task extends Component
 {
     public $task;
+   
     /**
      * Create a new component instance.
      *
@@ -15,6 +16,7 @@ class Task extends Component
     public function __construct($task)
     {
         $this->task = $task;
+       
     }
 
     /**

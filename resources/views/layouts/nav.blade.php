@@ -25,16 +25,18 @@
 
 <body class="h-full  bg-gray-300">
     <div id="app">
-        <section class="px-16 py-4 bg-gray-500">
-            <header class="container justify-between flex">
+        <section class="px-16 py-4 bg-gray-500 ">
+            <header class="container justify-between flex-col">
                 <h1 class="text-left text-lg font-bold">
                     {{ config('app.name', 'Laravel') }}
                 </h1>
-                <div class="flex-col">
-                    <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
-                    </a>
-                    <div class="">
+                <div class="flex">
+                    <div class="my-5 flex-1">
+                        <form action="" method="post">
+                            <button class="button-add" type="submit">Update {{ Auth::user()->name }}'s profile</button>
+                        </form>
+                    </div>
+                    <div>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}

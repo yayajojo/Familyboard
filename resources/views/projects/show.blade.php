@@ -24,10 +24,10 @@
             <div class="w-3/4 px-3">
                 <h2 class="text-xl my-3 text-gray-700 font-normal">Tasks</h2>
                 @foreach($project->tasks as $task)
-                <x-task :task="$task" />
+                <x-task :task="$task" :project="$project"/>
                 @endforeach
-                <x-create-task  :project="$project" />
-
+                @include('tasks.create',['project'=>$project])
+            
                 <h2 class="text-xl my-3 text-gray-700 font-normal">General Notes</h2>
                 <div>
                     <form class="card flex-column" action="{{route('project.update',compact('project'))}}" method="post">

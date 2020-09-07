@@ -18,8 +18,9 @@ class ProjectInvitationController extends Controller
 
         $validated = $request->validated();
         $invitedMember = User::whereEmail($validated['email'])->first();
-        Mail::to($invitedMember->email)->send(new InvitationInformed($invitedMember,$project));
-        broadcast(new ProjectInvitation($invitedMember));
+        Mail::to($invitedMember->email)->send(new InvitationInformed($invitedMember, $project));
+        //broadcast(new ProjectInvitation($invitedMember));
+
         $project->invite($invitedMember);
         return redirect(route('project.show', compact('project')));
     }

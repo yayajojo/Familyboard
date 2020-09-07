@@ -15,9 +15,9 @@ class ProjectInvitationTest extends TestCase
         $may = factory('App\User')->create();
         $project = ProjectFactory::ownedBy($may)->create();
         $jhon = $this->signIn();
-        $this->post(route('invitation.store',compact('project')),['email'=>$jhon->email])->assertStatus(403);
+        $this->post(route('invitation.store', compact('project')), ['email' => $jhon->email])->assertStatus(403);
     }
-    
+
     /** @test */
     public function a_project_can_invit_a_member()
     {
@@ -30,11 +30,11 @@ class ProjectInvitationTest extends TestCase
     /** @test */
     public function email_address_must_be_associated_with_a_valid_familyboard_account()
     {
-        
+
         $project = ProjectFactory::ownedBy($this->signIn())->create();
         $notMemberEmail = 'notmember@email';
         $res = $this->post(route('invitation.store', compact('project')), ['email' => $notMemberEmail])
-            ->assertSessionHasErrorsIn('invitation',['email'=>'The invited member should have a valid familyboard account']);
+            ->assertSessionHasErrorsIn('invitation', ['email' => 'The invited member should have a valid familyboard account']);
     }
 
     /** @test */
@@ -44,7 +44,16 @@ class ProjectInvitationTest extends TestCase
         $member = factory('App\User')->create();
         $project->invite($member);
         $this->signIn($member);
-        $this->patch(route('project.update',compact('project')),['title'=>'title changed'])->assertStatus(302);
-        $this->assertDatabaseHas('projects',['title'=>'title changed']);
+        $this->patch(route('project.update', compact('project')), ['title' => 'title changed'])->assertStatus(302);
+        $this->assertDatabaseHas('projects', ['title' => 'title changed']);
+    }
+    /** @test */
+    public function a_member_invited_twice_with_no_error_on_screen()
+    {
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
+        $member = factory('App\User')->create();
+        $this->post(route('invitation.store', compact('project')), ['email' => $member->email]);
+        $this->post(route('invitation.store', compact('project')), ['email' => $member->email])
+            ->assertRedirect(route('project.show', compact('project')));
     }
 }

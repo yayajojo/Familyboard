@@ -11,7 +11,7 @@ $factory->define(Task::class, function (Faker $faker) {
         'project_id'=>factory('App\Project'),
         'body'=>$faker->sentence,
         'completed'=>false,
-        'due'=>Carbon::now()->addDays(1),
-        'start'=>Carbon::now()
+        'due'=>'2021-09-08 19:00',
+        'start'=>'2021-09-08 19:00'
     ];
 });

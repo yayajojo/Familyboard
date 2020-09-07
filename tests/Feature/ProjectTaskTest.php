@@ -56,7 +56,7 @@ class ProjectTaskTest extends TestCase
   }
 
   /** @test */
-  public function only_task_owner_can_update_project_tasks()
+  public function only_project_members_can_update_project_tasks()
   {
     $project = ProjectFactory::ownedBy($this->signIn())->create();
     $task = factory('App\Task')->create();
@@ -64,7 +64,23 @@ class ProjectTaskTest extends TestCase
       ->assertStatus(403);
     $this->assertDatabaseMissing('tasks', ['body' => 'Test task']);
   }
-
+  /** @test */
+  public function only_project_members_can_see_edit_task_page()
+  {
+    $project = ProjectFactory::ownedBy($this->signIn())->create();
+    $task = factory('App\Task')->create();
+    $this->get(route('task.edit',['project'=>$project,'task'=>$task]))->assertStatus(403);
+  }
+  /** @test */
+  public function updated_task_would_be_redirected()
+  {
+    $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
+    $task = $project->tasks->first();
+    $updatedTask = array_merge($task->toArray(),['body'=>'task changed']);
+    $this->patch($task->path(),$updatedTask)
+    ->assertRedirect(route('project.show',compact('project')));
+  }
+  
   /** @test */
   public function a_task_require_a_due_date()
   {
@@ -91,4 +107,7 @@ class ProjectTaskTest extends TestCase
     $this->post(route('task.store', ['project' => $project]), ['body' => null])
       ->assertSessionHasErrors(['body']);
   }
+  
+  
+  
 }

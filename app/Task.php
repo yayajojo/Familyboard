@@ -12,8 +12,8 @@ class Task extends Model
     protected $touches = ['project'];
     protected $casts = [
         'completed' => 'boolean',
-        // 'start' => 'datetime:yy-m-d\TH:m',
-        // 'due' => 'datetime:yy-m-d\TH:m'
+        'start'=>'datetime:Y-m-d H:i',
+        'due'=>'datetime:Y-m-d H:i'
     ];
 
     public function project()

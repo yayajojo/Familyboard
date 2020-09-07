@@ -36,6 +36,11 @@ class Project extends Model
     }
     public function invite(User $member)
     {
-        $this->members()->save($member);
+       
+        MemberProject::firstOrCreate([
+            'member_id'=>$member->id,
+            'project_id'=>$this->id
+            ]);
+
     }
 }

@@ -9,13 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function edit(Project $project,Task $task)
+    {
+        $this->userIsOwnerOrMemberOfProject($task);
+        return view('tasks.edit',['task'=>$task,'project'=>$task->project]);
+    }
     public function store(Project $project)
     {
         $this->authorize('update', $project);
         $validatedData = $this->validateRequest();
         $project->addTask($validatedData);
-
-        return redirect(route('project.show', $project));
+        return redirect(route('project.show', compact('project')));
     }
 
     public function update(Project $project, Task $task)
@@ -29,7 +33,7 @@ class TaskController extends Controller
             ]
         );
         $task->update($updatedAttribute);
-        return redirect(route('project.show', compact('project')));
+        return redirect()->action('ProjectController@show',['project'=>$project]);
     }
 
     protected function userIsOwnerOrMemberOfProject(Task $task)

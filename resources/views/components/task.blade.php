@@ -1,21 +1,23 @@
-<div class="mb-3 card">
-
-<form  class="flex items-end" action="{{$task->path()}}" method="post">
-    @csrf
-    {{ method_field('PATCH') }}
-    <input class="mr-1 {{$task->completed?'text-gray-500':''}} outline-none focus:shadow-outline w-full bg-blue-200" type="text" name="body" value="{{$task->body}}" required>
-    @if(\Carbon\Carbon::parse($task->due)->lt(\Carbon\Carbon::now())&&!$task->completed)
-    <span class="bg-red-700 mx-1 px-2">Due</span>
-    @endif
-    <input class="mr-1"type="datetime-local" value="{{\Carbon\Carbon::parse($task->due)->format('yy-m-d\TH:m')}}" name="due" id="due">
-    
-    <input {{$task->completed?'checked':''}} 
-    type="checkbox" 
-    name="completed" 
-    onchange="this.form.submit()"
-    >
-    
-    
-</form>
-
+<div class="mb-3 card ">
+    <div class="mr-3 px-2 mb-5  {{$task->completed?'text-gray-500':''}}"> {{$task->body}} </div>
+    <div class="flex justify-around">
+        <div>
+            <span>Start:</span>
+            <input class="mr-1" type="datetime-local" value="{{\Carbon\Carbon::parse($task->start)->format('Y-m-d\TH:i')}}" name="start" id="start">
+        </div>
+        <div>
+            <span>Due:</span>
+            <input class="mr-1" type="datetime-local" value="{{\Carbon\Carbon::parse($task->due)->format('Y-m-d\TH:i')}}" name="due" id="due">
+        </div>
+        @if(\Carbon\Carbon::parse($task->due)->lt(\Carbon\Carbon::now())&&!$task->completed)
+        <span class="bg-red-700 mx-3 px-2">Due</span>
+        @elseif($task->completed == 0)
+        <span class="bg-green-500 text-black mx-3 px-2">Uncompleted</span>
+        @else
+        <span class="bg-yellow-500 text-black mx-3 px-2">completed</span>
+        @endif
+        <form method="GET" action="{{route('task.edit',['project'=>$task->project,'task'=>$task])}}">
+            <button class="button-add" type="submit">update</button>
+        </form>
+    </div>
 </div>
