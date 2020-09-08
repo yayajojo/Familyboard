@@ -1,6 +1,6 @@
-<div class="mb-3 card ">
-    <div class="mr-3 px-2 mb-5  {{$task->completed?'text-gray-500':''}}"> {{$task->body}} </div>
-    <div class="flex justify-around">
+<div class="mb-3 card flex-col">
+    <div class="my-5 {{$task->completed?'text-gray-500':''}}">{{$task->assignee->name}}: {{$task->body}} </div>
+    <div class="flex justify-between">
         <div>
             <span>Start:</span>
             <input class="mr-1" type="datetime-local" value="{{\Carbon\Carbon::parse($task->start)->format('Y-m-d\TH:i')}}" name="start" id="start">

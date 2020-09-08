@@ -52,7 +52,8 @@ class TaskController extends Controller
             [
                 'body' => 'required',
                 'due' => 'required|date',
-                'start' => 'required|date'
+                'start' => 'required|date',
+                'assignee_id'=>'required|int|exists:users,id'
             ]
         );
     }

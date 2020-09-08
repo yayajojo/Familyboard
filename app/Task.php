@@ -8,7 +8,7 @@ class Task extends Model
 {
     use Recordability;
 
-    protected $fillable = ['body', 'completed','start','due'];
+    protected $fillable = ['body', 'completed','start','due','assignee_id'];
     protected $touches = ['project'];
     protected $casts = [
         'completed' => 'boolean',
@@ -20,6 +20,10 @@ class Task extends Model
     {
         return $this->belongsTo('App\Project');
     }
+    public function assignee()
+    {
+        return $this->belongsTo('App\User','assignee_id');
+    }
     public function path()
     {
         return '/projects/' . $this->project->id . '/tasks/' . $this->id;
@@ -28,4 +32,6 @@ class Task extends Model
     {
         return $this->morphMany('App\Activity', 'recordable');
     }
+
+
 }

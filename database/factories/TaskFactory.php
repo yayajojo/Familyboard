@@ -11,7 +11,10 @@ $factory->define(Task::class, function (Faker $faker) {
         'project_id'=>factory('App\Project'),
         'body'=>$faker->sentence,
         'completed'=>false,
-        'due'=>'2021-09-08 19:00',
-        'start'=>'2021-09-08 19:00'
+        'due'=>'2021-09-08 19:00:00',
+        'start'=>'2021-09-08 19:00:00',
+        'assignee_id'=>function(array $task){
+            return App\Project::find($task['project_id'])->owner;
+        }
     ];
 });

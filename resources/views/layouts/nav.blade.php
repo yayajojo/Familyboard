@@ -26,15 +26,24 @@
 <body class="h-full  bg-gray-300">
     <div id="app">
         <section class="px-16 py-4 bg-gray-500 ">
-            <header class="container justify-between flex-col">
+            <header class="container justify-between flex">
                 <h1 class="text-left text-lg font-bold">
                     {{ config('app.name', 'Laravel') }}
                 </h1>
-                <div class="flex">
+                <div class="flex-col">
+                    @guest
                     <div class="my-5 flex-1">
-                        <form action="" method="post">
-                            <button class="button-add" type="submit">Update {{ Auth::user()->name }}'s profile</button>
-                        </form>
+                        <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </div>
+                    @if (Route::has('register'))
+                    <div class="my-5 flex-1">
+                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </div>
+                    @endif
+                    @endguest
+                    @auth
+                    <div class="my-5 flex-1">
+                        {{ Auth::user()->name }}
                     </div>
                     <div>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -46,6 +55,7 @@
                             @csrf
                         </form>
                     </div>
+                @endauth
                 </div>
             </header>
         </section>

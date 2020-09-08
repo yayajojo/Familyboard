@@ -24,8 +24,9 @@ class ProjectTest extends TestCase
     /** @test */
     public function project_can_add_a_task()
     {
-        $project = factory('App\Project')->create();
-        $task = factory('App\Task')->raw(['body'=>'Test task','project_id'=>null]);
+        $project = factory('App\Project')->create(); 
+        $task = factory('App\Task')->raw(['body'=>'Test task','project_id'=>null,
+        'assignee_id'=>$project->owner_id]);
         $project->addTask($task);
         $this->assertDatabaseHas('tasks',
         ['project_id'=>$project->id,

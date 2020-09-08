@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Facades\Tests\SetUp\ProjectFactory;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class ProjectTaskTest extends TestCase
@@ -21,7 +22,9 @@ class ProjectTaskTest extends TestCase
   public function project_can_has_tasks()
   {
     $project = ProjectFactory::ownedBy($this->signIn())->create();
-    $task = factory('App\Task')->raw(['project_id' =>null,'body'=>'Task test']);
+    $task = factory('App\Task')->raw(['project_id' =>null,
+    'body'=>'Task test',
+    'assignee_id'=>$project->owner_id]);
     
     $this->post(
       route('task.store', ['project' => $project]),
@@ -96,6 +99,16 @@ class ProjectTaskTest extends TestCase
     $this->post(route('task.store', ['project' => $project]), ['body' => "no due date",'due'=>Carbon::now(),'start'=>null])
       ->assertSessionHasErrors(['start']); 
   }
+
+  /** @test */
+  public function a_task_require_an_assignee()
+  {
+    $project = ProjectFactory::ownedBy($this->signIn())->create();
+    $task = factory('App\Task')->raw(['assignee_id'=>null,'project_id'=>null]);
+    $this->post(route('task.store', ['project' => $project]), $task)
+      ->assertSessionHasErrors(['assignee_id']);
+  }
+  
   
   
   
