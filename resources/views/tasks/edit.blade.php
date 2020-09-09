@@ -10,10 +10,12 @@
         <input class="mr-3" type="datetime-local" value="{{\Carbon\Carbon::parse($task->start)->format('Y-m-d\TH:i')}}" name="start" id="due" required>
         <label class="my-3" for="due">Due Date:</label>
         <input class="mr-3" type="datetime-local" value="{{\Carbon\Carbon::parse($task->due)->format('Y-m-d\TH:i')}}" name="due" id="due" required>
-        <label class="my-3" for="completed">Completed:</label>
-        <input class="mr-3" {{$task->completed?'checked':''}} type="checkbox" name="completed">
-        <div>
-            <label for="assignee_id">Assignees</label>
+        <div class="my-3">
+            <label class="my-3" for="completed">Completed:</label>
+            <input class="mr-3" {{$task->completed?'checked':''}} type="checkbox" name="completed">
+        </div>
+        <div class="my-3">
+            <label for="assignee_id">Assignee:</label>
             <select name="assignee_id" id="assignee_id" required>
                 @if($project->owner_id === $task->assignee_id)
                 <option value="{{$project->owner_id}}" selected>{{$project->owner->name}}</option>

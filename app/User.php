@@ -46,6 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Task', 'assignee_id');
     }
+    public function profile()
+    {
+        return $this->hasOne('App\Profile');
+    }
     public function getProjects()
     {
        return  Project::where('owner_id', $this->id)

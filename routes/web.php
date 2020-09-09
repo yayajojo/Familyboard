@@ -52,3 +52,10 @@ Route::middleware(['auth'])->group(
         });
     }
 );
+
+Route::middleware(['auth'])->group(
+    function(){
+        Route::get('/profiles/create','ProfileController@create')->name('profile.create');
+        Route::post('/profiles','ProfileController@store')->name('profile.store');
+    }
+);

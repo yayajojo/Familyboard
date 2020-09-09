@@ -43,19 +43,25 @@
                     @endguest
                     @auth
                     <div class="my-5 flex-1">
-                        {{ Auth::user()->name }}
+                        <button class="p-3 rounded-full bg-green-500 shadow-md focus:outline-none focus:shadow-outline">
+                            <a href="{{route('profile.create')}}">
+                                {{ Auth::user()->name }}
+                            </a>
+                        </button>
                     </div>
                     <div>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        <div class="px-3">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
+                                {{ __('Logout') }}
+                            </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
                     </div>
-                @endauth
+                    @endauth
                 </div>
             </header>
         </section>

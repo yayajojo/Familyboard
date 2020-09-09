@@ -15,7 +15,7 @@
                 <input id="due" type="datetime-local" name="due" min="{{\Carbon\Carbon::now()}}" required>
             </div>
             <div>
-                <label for="assignee_id">Assignees</label>
+                <label for="assignee_id">Assignee:</label>
                 <select name="assignee_id" id="assignee_id" required>
                 @foreach($project->members as $member)
                 <option value="{{$member->id}}">{{$member->name}}</option>

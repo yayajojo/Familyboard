@@ -6,9 +6,6 @@
 <header class="flex items-end px-4 py-4 justify-between">
   <div class="my-5 flex">
     <span class="text-xl px-2 ">My Projects</span>
-    <form action="" method="post">
-      <button class="button-add" type="submit">Update profile</button>
-    </form>
   </div>
   <form class="text-sm px-2" action="{{route('project.create')}}" method="get">
     <button class="button-add" type="submit">

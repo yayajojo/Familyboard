@@ -56,7 +56,6 @@ class RecordActivityTest extends TestCase
         $task = $project->tasks[0];
         $completedTask = array_merge($task->toArray(),['completed' => 'on']);
         $this->patch($task->path(), $completedTask);
-        //dd($task->due);
         $this->assertDatabaseHas('activities', ['description' => 'completed_task']);
         $this->assertCount(2, $task->activities);
         $this->assertEquals('completed_task', $task->activities[1]->description);
