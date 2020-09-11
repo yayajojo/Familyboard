@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Facade\FlareClient\Stacktrace\File;
-use GuzzleHttp\Psr7\UploadedFile;
+use  Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
@@ -25,29 +25,26 @@ class ProfileTest extends TestCase
     {
         $user = factory('App\User')->create();
         $this->signIn($user);
-        Storage::fake('app/public/avatars');
-        
+        $file = UploadedFile::fake()->image('avatar.jpg');
+
         $response = $this->json('POST', '/profiles', [
-            'avatar' => new File(storage_path('tests/robot.png'))
-        ]);
-
-        // Assert the file was stored...
-        Storage::disk('app/public/avatars')->assertExists('robot.png');
-
-        $this->post(
-            route('profile.store'),
-            [
-                'name' => $user->name,
-                'email' => $user->email,
-                'avatar' => $this->faker->image('tests'),
-                'password' => '12345678',
-                'password_confirmation' => '12345678',
-            ]
-        );
-
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
+            'avatar' => $file,
+        ])->assertRedirect(route('project.index'));
+       
         $this->assertDatabaseHas(
             'profiles',
             ['user_id' => $user->id]
         );
+        Storage::disk('avatars')->assertExists($file->hashName());
+        Storage::disk('avatars')->delete($file->hashName());
+        
     }
+
+    
+    
+    
 }

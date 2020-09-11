@@ -20,7 +20,7 @@ class ProfileController extends Controller
         Auth::user()->update($validatedUserInfo);
         if ($request->exists('avatar')) {
             $this->validateAvatar($request);
-            $storageAvatar = request('avatar')->store('public/avatars');
+            $storageAvatar = $request->file('avatar')->store('public/avatars');
             $publicAvatar = str_replace('public','/storage',$storageAvatar);
             Profile::updateOrCreate(
                 ['user_id' => Auth::id()],

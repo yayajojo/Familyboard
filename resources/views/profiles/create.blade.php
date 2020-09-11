@@ -21,11 +21,11 @@
         <label class="mt-3" for="password">
             Password:
         </label>
-        <input id="password" name="password" type="password">
+        <input id="password" name="password" type="password" required>
         <label class="mt-3" for="password_confirmation">
             Password Confirmation:
         </label>
-        <input id="password_confirmation" name="password_confirmation" type="password">
+        <input id="password_confirmation" name="password_confirmation" type="password" required>
     </div>
     <div class="flex items-end">
         <button class="button-add mt-3 w-1/4" type="submit">Submit</button>
