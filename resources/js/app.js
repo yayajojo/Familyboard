@@ -42,7 +42,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 //             });
 //     },
 
-});
+// });
 
 // const projectshow = new Vue({
 //     el: '#projectshow',
