@@ -8,7 +8,7 @@ trait Recordability
 {
     public function recordActivity(string $description, $changes = [])
     {
-        $user_id = $this->activityOwner();// used for temporary purposes to pass tests 
+        $user_id = $this->activityOwner();
         $this->activities()->create(['user_id'=>$user_id,'description' => $description, 'changes' => $changes]);
     }
 

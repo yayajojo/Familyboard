@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate as Gate;
 
 class InvitationRequest extends FormRequest
@@ -16,7 +17,8 @@ class InvitationRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('invite',$this->route('project'));
+        return Auth::user()->can('invite',$this->route('project')); 
+        //return Gate::allows('invite',$this->route('project'));
         
     }
 

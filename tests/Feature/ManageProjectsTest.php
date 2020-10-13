@@ -89,11 +89,14 @@ class ManageProjectsTest extends TestCase
     public function project_owner_can_delete_the_project()
     {
         $project = ProjectFactory::ownedBy($this->signIn())->create();
-        $this->delete(route('project.destory', compact('project')));
+        $this->delete(route('project.destory', compact('project')))->assertStatus(302);
         $this->assertDatabaseMissing('projects', ['id' => $project->id]);
     }
-    /** @test */
-    public function non_project_owner_can_not_delete_the_project()
+    /** 
+     * @test 
+     * 使用者不是計畫擁有者或被邀請成員時，伺服器會回傳403 
+     */
+    public function non_project_related_user_can_not_delete_the_project()
     {
         $this->signIn();
         $project = ProjectFactory::create();

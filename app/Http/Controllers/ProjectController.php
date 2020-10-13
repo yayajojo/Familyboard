@@ -13,16 +13,15 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        
+
         $projects = Auth::user()->getProjects();
         return view('projects.index', ['projects' => $projects]);
     }
 
     public function show(Project $project)
     {
-       $activities = $this->getActivities($project);
-
         $this->authorize('view', $project);
+        $activities = $this->getActivities($project);
         return view('projects.show', [
             'project' => $project,
             'activities' => $activities

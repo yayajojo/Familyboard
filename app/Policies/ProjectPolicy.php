@@ -11,17 +11,6 @@ class ProjectPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function viewAny(User $user)
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
@@ -68,17 +57,6 @@ class ProjectPolicy
         return $user->is($project->owner);
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Project  $project
-     * @return mixed
-     */
-    public function restore(User $user, Project $project)
-    {
-        //
-    }
 
     
 }

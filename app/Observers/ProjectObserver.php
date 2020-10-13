@@ -35,16 +35,4 @@ class ProjectObserver
         $project->recordActivity('updated',$changes);
     }
 
-    /**
-     * Handle the project "deleted" event.
-     *
-     * @param  \App\Project  $project
-     * @return void
-     */
-    public function deleted(Project $project)
-    {
-        
-    }
-
-    
 }

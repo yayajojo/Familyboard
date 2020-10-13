@@ -51,7 +51,6 @@ class RecordActivityTest extends TestCase
     /** @test */
     public function completing_a_task()
     {
-        $this->withoutExceptionHandling();
         $project = ProjectFactory::ownedBy($this->signIn())->withTasks(1)->create();
         $task = $project->tasks[0];
         $completedTask = array_merge($task->toArray(),['completed' => 'on']);

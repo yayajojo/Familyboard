@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Task;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
     public function edit(Project $project,Task $task)
     {
-        $this->userIsOwnerOrMemberOfProject($task);
+        $this->isUserOwnerOrMemberOfProject($task);
         return view('tasks.edit',['task'=>$task,'project'=>$task->project]);
     }
     public function store(Project $project)
@@ -24,7 +23,7 @@ class TaskController extends Controller
 
     public function update(Project $project, Task $task)
     {
-        $this->userIsOwnerOrMemberOfProject($task);
+        $this->isUserOwnerOrMemberOfProject($task);
         $validatedData = $this->validateRequest();
         $updatedAttribute = array_merge(
             $validatedData,
@@ -36,7 +35,7 @@ class TaskController extends Controller
         return redirect()->action('ProjectController@show',['project'=>$project]);
     }
 
-    protected function userIsOwnerOrMemberOfProject(Task $task)
+    protected function isUserOwnerOrMemberOfProject(Task $task)
     {
         if (
             Auth::user()->isNot($task->project->owner)

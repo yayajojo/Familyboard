@@ -5,9 +5,16 @@ env_variables:
   APP_KEY: base64:HheW+2c6KYz0VGQMaU7FfhNEoXX3KUXLNJbcyovmt/M=
   APP_STORAGE: /tmp
   VIEW_COMPILED_PATH: /tmp
-  SESSION_DRIVER: cookie
+  CACHE_DRIVER: database
+  SESSION_DRIVER: database
+  ## Set these environment variables according to your CloudSQL configuration.
+  DB_DATABASE: laravel 
+  DB_USERNAME: root
+  DB_PASSWORD: 4mg8Djhrjn2COaNk
+  ## for MYSQL, use DB_SOCKET:
+  DB_SOCKET: "/cloudsql/familyboard-1600408991322:asia-east1:id-familyboard"
 
-
+ 
 handlers:
 - url: /(.*\.(css|js))$
   static_files: public/\1
@@ -17,3 +24,7 @@ handlers:
   secure: always
   redirect_http_response_code: 301
   script: auto
+
+
+  
+  
