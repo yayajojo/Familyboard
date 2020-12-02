@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate as Gate;
+use Illuminate\Validation\Rule;
 
 class InvitationRequest extends FormRequest
 {
@@ -30,8 +31,8 @@ class InvitationRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'=>'required|exists:users,email'
-            ];
+            'email'=>['required','exists:users,email']
+        ];
     }
 
     public function messages()
