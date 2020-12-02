@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -34,7 +35,9 @@ class ProfileController extends Controller
     {
         return $request->validate([
             'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'max:255', 'exists:users,email'],
+            'email' => ['required', 'email', 'max:255',
+            Rule::unique('users','email')->ignore(Auth::id()) 
+        ],
             'password' => ['required','min:8', 'confirmed']
         ]);
     }
