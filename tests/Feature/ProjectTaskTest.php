@@ -48,8 +48,11 @@ class ProjectTaskTest extends TestCase
     $this->assertDatabaseHas('tasks', ['body' => 'Task updated', 'completed' => true, 'id' => $task->id]);
   }
 
-  /** @test */
-  public function only_project_owner_can_add_project_tasks()
+  /** 
+   * @test
+   * project members are owner and invited user, they share the same authority, 
+   * */
+  public function project_tasks_can_not_be_added_by_others_not_project_members()
   {
     $this->signIn();
     $project = ProjectFactory::create();
@@ -59,7 +62,7 @@ class ProjectTaskTest extends TestCase
   }
 
   /** @test */
-  public function only_project_members_can_update_project_tasks()
+  public function tasks_can_not_updated_by_other_project_owner()
   {
     $project = ProjectFactory::ownedBy($this->signIn())->create();
     $task = factory('App\Task')->create();
@@ -68,7 +71,7 @@ class ProjectTaskTest extends TestCase
     $this->assertDatabaseMissing('tasks', ['body' => 'Test task']);
   }
   /** @test */
-  public function only_project_members_can_see_edit_task_page()
+  public function edit_task_page_can_not_viewed_by_other_project_owner()
   {
     $project = ProjectFactory::ownedBy($this->signIn())->create();
     $task = factory('App\Task')->create();
