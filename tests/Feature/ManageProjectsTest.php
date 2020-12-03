@@ -121,6 +121,30 @@ class ManageProjectsTest extends TestCase
         $project = ProjectFactory::create();
         $this->get(route('project.show', ['project' => $project]))->assertStatus(403);
     }
+
+    /** @test */
+    public function edit_project_page_can_be_viewed_by_owner()
+    {
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
+        $this->get(route('project.edit',['project' => $project]))->assertStatus(200);
+    }
+    
+    /** @test */
+    public function edit_project_page_can_be_viewed_by_invited_member()
+    {
+        $owner = factory("App\User")->create();
+        $project = ProjectFactory::create($owner);
+        $member = $this->signIn();
+        $project->invite($member);
+        $this->get(route('project.edit',['project' => $project]))->assertStatus(200);
+    }
+    /** @test */
+    public function edit_project_page_can_be_viewed_by_others()
+    {
+        $this->signIn();
+        $project = ProjectFactory::create();
+        $this->get(route('project.edit',['project' => $project]))->assertStatus(403);
+    }
     /** @test */
     public function an_authenticated_user_cannot_update_projects_of_others()
     {
