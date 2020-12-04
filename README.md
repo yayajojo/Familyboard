@@ -49,19 +49,19 @@
     5. 計畫欄
     6. 紀錄（使用Laravel的Observer功能觀察計畫與任務的創立與修改）
         - 紀錄使用者-所做的事-時間
-        * 當計畫創建時：ex. @ jhao has created a project: 3 hours ago
-        * 當計畫修改時：ex. @ admin has updated the description of the project: 1 second ago
-        * 當任務創建時：ex. @ admin has created a task 'hi' : 1 second ago
-        * 當任務修改時: ex. @ jhao has updated the task 'a' : 22 hours ago
-    6. 邀請加入計畫功能
-        ＊ 邀請功能（只有計畫擁有者能夠邀請其他使用者加入）
-        1. 使用者為計畫擁有者，則會出現Invite a member欄位
-        2. 送出邀請時會確認使用者身份，非計畫擁有者時會出現403頁面
-        ＊ 只能邀請已註冊的使用者
-        1. 後端確認該email存在於users表中
-        2. 不存在會出現錯誤訊息 ex. The invited member should have a valid familyboard account
-        ＊ 使用Laravel的Queue功能將送信的工作儲存起來
-        1. 使用php artisan queue:work 於之後執行送信任務
+            * 當計畫創建時：ex. @ jhao has created a project: 3 hours ago
+            * 當計畫修改時：ex. @ admin has updated the description of the project: 1 second ago
+            * 當任務創建時：ex. @ admin has created a task 'hi' : 1 second ago
+            * 當任務修改時: ex. @ jhao has updated the task 'a' : 22 hours ago
+    7. 邀請加入計畫功能
+        - 邀請功能（只有計畫擁有者能夠邀請其他使用者加入）
+            * 使用者為計畫擁有者，則會出現Invite a member欄位
+            * 送出邀請時會確認使用者身份，非計畫擁有者時會出現403頁面
+        - 只能邀請已註冊的使用者
+            * 後端確認該email存在於users表中
+            * 不存在會出現錯誤訊息 ex. The invited member should have a valid familyboard account
+        - 使用Laravel的Queue功能將送信的工作儲存起來
+            * 使用php artisan queue:work 於之後執行送信任務
 - 除了刪除計畫與邀請成員的計畫擁有者專屬權限外，被邀請成員擁有其他管理計畫的權限，其他人會出現403頁面
         
 ## TASKS
@@ -79,23 +79,22 @@
 - 修改任務(跳至修改任務頁面）
 
 ## PROFILE
-
 - 修改個人資料
-  ＊ 修改email時確認是否已被他人使用，已使用則出現：The email has already been taken.
+  * 修改email時確認是否已被他人使用，已使用則出現：The email has already been taken.
 - 上傳大頭照
-  ＊ 使用Laravel的storage
+  * 使用Laravel的storage
 
 ### TDD測試狀況
 - 測試狀況
-  ＊ 測試數量：48
-  ＊ 耗時：4.11s
-  ＊ 測試資料庫：
+  * 測試數量：48
+  * 耗時：4.11s
+  * 測試資料庫：
     1. phpunit.xml設定<server name="DB_CONNECTION" value="mysql_testing"/> 
     2. 於config/database.php設定測試資料庫需要之設定
     
 - 測試情境
-  ＊ 以整合測試為主
-  ＊ 測試主要針對
+  * 以整合測試為主
+  * 測試主要針對
     1. 認證測試
        - 未登入或註冊的人拜訪頁面時，要轉向到登入頁面
     2. 權限測試（已登入時）
@@ -106,7 +105,7 @@
     3. 表單驗證
        - 若未滿足驗證要求，則出現錯誤
        - 利用assertSessionHasErrors確認
-   ＊ 單元測試主要針對類與類關係
+   * 單元測試主要針對類與類ELOQUENT的關係
    
 
 
