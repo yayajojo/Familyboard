@@ -112,6 +112,7 @@ class ManageProjectsTest extends TestCase
         $member = $this->signIn();
         $project->invite($member);
         $this->delete(route('project.destory', compact('project')))->assertForbidden();
+        $this->assertDatabaseHas('projects', ['id' => $project->id]);
     }
 
     /** @test */
@@ -139,7 +140,7 @@ class ManageProjectsTest extends TestCase
         $this->get(route('project.edit',['project' => $project]))->assertStatus(200);
     }
     /** @test */
-    public function edit_project_page_can_be_viewed_by_others()
+    public function edit_project_page_cannot_be_viewed_by_others()
     {
         $this->signIn();
         $project = ProjectFactory::create();
