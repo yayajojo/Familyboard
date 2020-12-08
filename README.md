@@ -8,8 +8,10 @@
 
 ## 網站雲端部署（展示用）
 - 部署至GOOGLE APP ENGINE 
-- [網址]()
-
+- [網址](https://familyboard-297907.el.r.appspot.com/)
+- 展示
+  - 已創建帳號：admin@gmail
+  - 密碼： 1qaz1qaz
 ## 網站實作分為六個方面
 
 - **AUTH** 註冊或登入
