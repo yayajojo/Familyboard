@@ -10,10 +10,9 @@
 - 部署至GOOGLE APP ENGINE 
 - 使用Cloud SQL資料庫
 - 沒有實作Google Cloud Storage存取頭像，該功能有實作於[Tweety-Follow](https://github.com/yayajojo/Tweet-Follow)
-- [網址](https://familyboard-297907.el.r.appspot.com/)
-- 展示
-  - 已創建帳號：family@gmail
-  - 密碼： familyboard
+- 沒有實作Google Cloud Storage存取頭像，該功能有實作於[Tweety-Follow](https://github.com/yayajojo/Tweet-Follow)
+- [網址]目前從Google Cloud下架,準備移往AWS
+
 ## 網站實作分為六個方面
 
 - **AUTH** 註冊或登入
