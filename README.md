@@ -7,12 +7,16 @@
 - 使用Laravel 7.x
 
 ## 網站雲端部署（展示用）
-- 部署至GOOGLE APP ENGINE 
-- 使用Cloud SQL資料庫
-- 沒有實作Google Cloud Storage存取頭像，該功能有實作於[Tweety-Follow](https://github.com/yayajojo/Tweet-Follow)
-- 沒有實作Google Cloud Storage存取頭像，該功能有實作於[Tweety-Follow](https://github.com/yayajojo/Tweet-Follow)
-- [網址]目前從Google Cloud下架,準備移往AWS
-
+- 部署至AWS的Elastic Beanstalk
+- 資料庫：使用RDS的mysql
+- S3的儲存使用者頭像功能未實作，該功能實作請參考[Tweet-Follow專案](https://github.com/yayajojo/Tweet-Follow)
+- [展示網站網址](http://familyboard-env-2.eba-qsrnsj2e.us-east-2.elasticbeanstalk.com/)
+   - 已創建帳號1：
+        (1) Email: test2@gmail
+        (2) 密碼： familyboard
+   - 已創建帳號2：
+        (1) Email: test3@gmail
+        (2) 密碼： familyboard
 ## 網站實作分為六個方面
 
 - **AUTH** 註冊或登入
