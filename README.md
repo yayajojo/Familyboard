@@ -11,12 +11,6 @@
 - 資料庫：使用RDS的mysql
 - S3的儲存使用者頭像功能未實作，該功能實作請參考[Tweet-Follow專案](https://github.com/yayajojo/Tweet-Follow)
 - [展示網站網址](http://familyboard-env-2.eba-qsrnsj2e.us-east-2.elasticbeanstalk.com/)
-   - 已創建帳號1：
-        (1) Email: test2@gmail
-        (2) 密碼： familyboard
-   - 已創建帳號2：
-        (1) Email: test3@gmail
-        (2) 密碼： familyboard
 ## 網站實作分為六個方面
 
 - **AUTH** 註冊或登入
