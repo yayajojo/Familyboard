@@ -10,7 +10,6 @@
 - 部署至AWS的Elastic Beanstalk
 - 資料庫：使用RDS的mysql
 - S3的儲存使用者頭像功能未實作，該功能實作請參考[Tweet-Follow專案](https://github.com/yayajojo/Tweet-Follow)
-- [展示網站網址](http://familyboard-env-2.eba-qsrnsj2e.us-east-2.elasticbeanstalk.com/)
 ## 網站實作分為六個方面
 
 - **AUTH** 註冊或登入
